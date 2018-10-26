@@ -7,10 +7,13 @@ const seedRewards = () => {
   let tiers;
   for (let i = 1; i < 101; i++) {
 
-    if (i % 10 === 0 && i % 8 !== 0) {
-      tiers = [1, 5, 10, 25, 50, 75, 100, 250, 500, 750];
-    } else if (i % 8 === 0) {
+    //arbitrary trap to semi-randomize reward tier levels for different projects
+    if (i % 8 === 0) {
       tiers = [1, 5, 10, 25, 50];
+    } else if (i % 12 === 0) {
+      tiers = [1, 5, 10, 25, 50, 100];
+    } else if (i % 10 === 0) {
+      tiers = [1, 5, 10, 25, 50, 75, 100, 250, 500, 750];
     } else {
       tiers = [1, 5, 10, 25, 50, 75, 100];
     }
