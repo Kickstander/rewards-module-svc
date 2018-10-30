@@ -21,7 +21,7 @@ const seedRewards = () => {
     for (let j = 0; j < tiers.length; j++) {
       let isLimited = false;
       let limitCount = null;
-      let estDeliv = faker.date.month() + '' + faker.random.number({min: 2019, max: 2022});
+      let estDeliv = faker.date.month() + ' ' + faker.random.number({min: 2019, max: 2022});
       let backers = faker.random.number(500);
 
       if (j === 8) {
