@@ -17,7 +17,17 @@
 
 ## Usage
 
-> Some usage instructions
+> From within the root directory:
+```sh
+npm run build
+npm start
+```
+
+```sh
+To seed the database:
+npm run schema
+npm run seed
+```
 
 ## Requirements
 
