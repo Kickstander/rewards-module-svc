@@ -1,4 +1,3 @@
 test('simple addition test', () => {
-  let testStr = document.getElementById('testDiv').innerText();
-  expect(testStr).toEqual('HELLO WORLD!');
+  expect(2 + 2).toBe(4);
 });
