@@ -23,7 +23,7 @@ npm run build
 npm start
 ```
 
-To seed the database:
+> To seed the database:
 ```sh
 npm run schema
 npm run seed
