@@ -28,6 +28,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    //initial mount with project 1 for now
     this.fetchRewards(1);
   }
 
@@ -35,7 +36,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>Support</h1>
-        <div>
+        <div className='pledgeWidget'>
           <PledgeWidget />
         </div>
         <div>
