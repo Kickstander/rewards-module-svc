@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import RewardTier from './RewardTier.jsx';
 import PledgeWidget from './PledgeWidget.jsx';
 
@@ -35,10 +36,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Support</h1>
-        <div className='pledgeWidget'>
-          <PledgeWidget />
-        </div>
+        <StyledHeader>Support</StyledHeader>
+        <StyledPledgeWidget className='pledgeWidget'>
+          <PledgeWidget projectId={this.state.projectId} />
+        </StyledPledgeWidget>
         <div>
           {this.state.projectRewards.map((reward) => (
             <RewardTier key={`${this.state.projectId}${reward.id}`} reward={reward} />
@@ -49,5 +50,21 @@ class App extends React.Component {
   }
 
 }
+
+const StyledHeader = styled.h1`
+  font-family: 'Raleway', sans-serif;
+  font-size: 26px;
+`;
+
+const StyledPledgeWidget = styled.div`
+  margin-bottom: 20px;
+  width: 20%;
+  border: solid 1px;
+  padding: 1%;
+
+  :hover {
+    cursor: pointer;
+  }
+`;
 
 export default App;

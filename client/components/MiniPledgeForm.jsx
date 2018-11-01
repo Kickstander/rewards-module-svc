@@ -3,14 +3,16 @@ import styled from 'styled-components';
 
 const MiniPledgeForm = (props) => (
   <div className='miniPledgeForm'>
-    <LabelWrapper>Pledge amount</LabelWrapper>
-    <div>
-      <CurrencyWrapper for={`${props.projectId}pledgeForm`}>$</CurrencyWrapper>
-      <InputWrapper type='text' id={`${props.projectId}pledgeForm`} defaultValue={`${props.pledgeAmount}`} min={`${props.pledgeAmount}`}></InputWrapper>
-    </div>
-    <div>
-      <Continue>Continue</Continue>
-    </div>
+    <form>
+      <LabelWrapper>Pledge amount</LabelWrapper>
+      <div>
+        <CurrencyWrapper htmlFor={`${props.projectId}pledgeForm`}>$</CurrencyWrapper>
+        <InputWrapper type='text' id={`${props.projectId}pledgeForm`} defaultValue={`${props.pledgeAmount}`} min={`${props.pledgeAmount}`}></InputWrapper>
+      </div>
+      <div>
+        <Continue>Continue</Continue>
+      </div>
+    </form>
   </div>
 );
 
@@ -28,13 +30,16 @@ const CurrencyWrapper = styled.label`
   display: flex inline-block;
   align-items: center;
   justify-content: center;
-  padding-bottom: 3px;
+  padding-top: 1.1%;
+  padding-bottom: 2.2%;
   padding-right: 3%;
   padding-left: 3%;
 `;
 
 const InputWrapper = styled.input`
   box-sizing: border-box;
+  padding: 1.5%;
+  width: 90%;
 `;
 
 const Continue = styled.button`

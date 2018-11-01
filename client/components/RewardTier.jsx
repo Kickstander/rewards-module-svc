@@ -6,7 +6,7 @@ class RewardTier extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'default'
+      clicked: false
     };
 
     this.handleWidgetClick = this.handleWidgetClick.bind(this);
@@ -15,17 +15,21 @@ class RewardTier extends React.Component {
 
   handleWidgetClick() {
     this.setState({
-      view: 'clicked'
+      clicked: true
     });
   }
 
   renderView() {
-    let {view} = this.state;
-    if (view === 'clicked') {
+    let { clicked } = this.state;
+    if (clicked === false) {
       return (
-        <StyledMiniPledgeForm>
+        <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
+      );
+    } else if (clicked === true) {
+      return (
+        <DivWrapper>
           <MiniPledgeForm projectId={this.props.reward.id} pledgeAmount={this.props.reward.pledgeAmount}/>
-        </StyledMiniPledgeForm>
+        </DivWrapper>
       );
     }
   }
@@ -33,7 +37,7 @@ class RewardTier extends React.Component {
   render() {
     return (
       <RewardWrapper>
-        <TierWrapper id={`${this.props.reward.id}`} className='rewardTier'>
+        <DivWrapper id={`${this.props.reward.id}`} className='rewardTier'>
           <TitleWrapper className='pledgeAmount'>Pledge US$ {this.props.reward.pledgeAmount} or more</TitleWrapper>
           <RewardName className='rewardName'>{this.props.reward.name}</RewardName>
           <RewardDesc className='rewardDesc'>{this.props.reward.description}</RewardDesc>
@@ -54,8 +58,7 @@ class RewardTier extends React.Component {
             <ContentWrapper>{this.props.reward.shipsTo}</ContentWrapper>
           </div>
           <GenericWrapper className='backers'>{this.props.reward.backers} backers</GenericWrapper>
-        </TierWrapper>
-        <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
+        </DivWrapper>
         {this.renderView()}
       </RewardWrapper>
     );
@@ -65,7 +68,7 @@ class RewardTier extends React.Component {
 // styled components for RewardTier component
 const RewardWrapper = styled.div`
   position: relative;
-  width: 18%;
+  width: 22%;
   border: solid 1px;
   margin-bottom: 20px;
 `;
@@ -90,11 +93,7 @@ const Overlay = styled.div`
   }
 `;
 
-const StyledMiniPledgeForm = styled.div`
-  margin: 15px;
-`;
-
-const TierWrapper = styled.div`
+const DivWrapper = styled.div`
   margin: 15px;
 `;
 
