@@ -24,7 +24,7 @@ class RewardTier extends React.Component {
     if (view === 'clicked') {
       return (
         <StyledMiniPledgeForm>
-          <MiniPledgeForm reward={this.props.reward}/>
+          <MiniPledgeForm projectId={this.props.reward.id} pledgeAmount={this.props.reward.pledgeAmount}/>
         </StyledMiniPledgeForm>
       );
     }

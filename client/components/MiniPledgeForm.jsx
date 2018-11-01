@@ -5,8 +5,8 @@ const MiniPledgeForm = (props) => (
   <div className='miniPledgeForm'>
     <LabelWrapper>Pledge amount</LabelWrapper>
     <div>
-      <CurrencyWrapper for={`${props.reward.id}pledgeForm`}>$</CurrencyWrapper>
-      <InputWrapper type='text' id={`${props.reward.id}pledgeForm`} defaultValue={`${props.reward.pledgeAmount}`} min={`${props.reward.pledgeAmount}`}></InputWrapper>
+      <CurrencyWrapper for={`${props.projectId}pledgeForm`}>$</CurrencyWrapper>
+      <InputWrapper type='text' id={`${props.projectId}pledgeForm`} defaultValue={`${props.pledgeAmount}`} min={`${props.pledgeAmount}`}></InputWrapper>
     </div>
     <div>
       <Continue>Continue</Continue>
