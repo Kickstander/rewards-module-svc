@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
+
 const app = express();
 const port = 3000;
 
@@ -8,21 +9,19 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.get('/api/:projectId/rewards', (req, res) => {
-  let projectId = req.params.projectId;
+  const { projectId } = req.params;
 
   db.Reward.findAll({
     where: {
-      projectId: projectId
+      projectId,
     },
     order: [
-      ['pledgeAmount', 'ASC']
-    ]
+      ['pledgeAmount', 'ASC'],
+    ],
   })
     .then((rewards) => {
-      rewards = rewards.map((reward) => {
-        return reward.dataValues;
-      });
-      res.send(rewards);
+      const results = rewards.map(reward => (reward.dataValues));
+      res.send(results);
     });
 });
 

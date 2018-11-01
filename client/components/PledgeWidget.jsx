@@ -5,7 +5,7 @@ class PledgeWidget extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clicked: false
+      clicked: false,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -13,12 +13,12 @@ class PledgeWidget extends React.Component {
 
   handleClick() {
     this.setState({
-      clicked: true
+      clicked: true,
     });
   }
 
   renderView() {
-    let { clicked } = this.state;
+    const { clicked } = this.state;
     if (clicked === true) {
       return (
         <div>
@@ -26,27 +26,31 @@ class PledgeWidget extends React.Component {
         </div>
       );
     }
+    return (
+      <div />
+    );
   }
 
   render() {
+    const { projectId } = this.props;
+
     return (
-      <div className='pledgeWidget' onClick={this.handleClick}>
+      <div className="pledgeWidget" onClick={this.handleClick}>
         <DivWrapper>Make a pledge without a reward</DivWrapper>
         <form>
           <DivWrapper>
-            <CurrencyWrapper htmlFor={`${this.props.projectId}pledgeWidget`}>$</CurrencyWrapper>
-            <InputWrapper type='text' id={`${this.props.projectId}pledgeWidget`} defaultValue='10'></InputWrapper>
+            <CurrencyWrapper htmlFor={`${projectId}pledgeWidget`}>$</CurrencyWrapper>
+            <InputWrapper type="text" id={`${projectId}pledgeWidget`} defaultValue="10" />
           </DivWrapper>
           {this.renderView()}
         </form>
       </div>
     );
   }
-
 }
 
 
-//styled components for PledgeWidget component
+// styled components for PledgeWidget component
 const CurrencyWrapper = styled.label`
   font-size: 14px;
   border: solid 1px;

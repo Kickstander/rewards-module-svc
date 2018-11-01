@@ -9,10 +9,15 @@ class App extends React.Component {
     super(props);
     this.state = {
       projectRewards: [],
-      currentProject: null
+      currentProject: null,
     };
 
     this.fetchRewards = this.fetchRewards.bind(this);
+  }
+
+  componentDidMount() {
+    // initial mount with project 1 for now
+    this.fetchRewards(1);
   }
 
   fetchRewards(projectId) {
@@ -20,7 +25,7 @@ class App extends React.Component {
       .then((res) => {
         this.setState({
           projectRewards: res.data,
-          currentProject: projectId
+          currentProject: projectId,
         });
       })
       .catch((err) => {
@@ -28,27 +33,25 @@ class App extends React.Component {
       });
   }
 
-  componentDidMount() {
-    //initial mount with project 1 for now
-    this.fetchRewards(1);
-  }
 
   render() {
+    const { currentProject } = this.state;
+    const { projectRewards } = this.state;
+
     return (
       <div>
         <StyledHeader>Support</StyledHeader>
-        <StyledPledgeWidget className='pledgeWidget'>
-          <PledgeWidget projectId={this.state.projectId} />
+        <StyledPledgeWidget className="pledgeWidget">
+          <PledgeWidget projectId={currentProject} />
         </StyledPledgeWidget>
         <div>
-          {this.state.projectRewards.map((reward) => (
-            <RewardTier key={`${this.state.projectId}${reward.id}`} reward={reward} />
+          {projectRewards.map(reward => (
+            <RewardTier key={`${currentProject}${reward.id}`} reward={reward} />
           ))}
         </div>
       </div>
     );
   }
-
 }
 
 const StyledHeader = styled.h1`

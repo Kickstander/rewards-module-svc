@@ -1,13 +1,12 @@
 const faker = require('faker');
-const db = require('./index.js');
 const Promise = require('bluebird');
+const db = require('./index.js');
 
 const seedRewards = () => {
   const rewards = [];
   let tiers;
-  for (let i = 1; i < 101; i++) {
-
-    //arbitrary trap to semi-randomize reward tier levels for different projects
+  for (let i = 1; i < 101; i += 1) {
+    // arbitrary trap to semi-randomize reward tier levels for different projects
     if (i % 8 === 0) {
       tiers = [1, 5, 10, 25, 50];
     } else if (i % 12 === 0) {
@@ -18,10 +17,10 @@ const seedRewards = () => {
       tiers = [1, 5, 10, 25, 50, 75, 100];
     }
 
-    for (let j = 0; j < tiers.length; j++) {
+    for (let j = 0; j < tiers.length; j += 1) {
       let isLimited = false;
       let limitCount = null;
-      let estDeliv = faker.date.month() + ' ' + faker.random.number({min: 2019, max: 2022});
+      const estDeliv = `${faker.date.month()} ${faker.random.number({ min: 2019, max: 2022 })}`;
       let backers = faker.random.number(500);
 
       if (j === 8) {
@@ -43,40 +42,39 @@ const seedRewards = () => {
         item1: faker.lorem.words(),
         item2: faker.lorem.words(),
         item3: faker.lorem.words(),
-        isLimited: isLimited,
-        limitCount: limitCount,
-        estDeliv: estDeliv,
+        isLimited,
+        limitCount,
+        estDeliv,
         shipsTo: faker.lorem.words(),
-        backers: backers
+        backers,
       });
     }
   }
 
-  let rewardPromises = rewards.map((reward) => {
-    return db.Reward.create(reward)
+  const rewardPromises = rewards.map(reward => (
+    db.Reward.create(reward)
       .catch((err) => {
-        return Promise.resolve();
-      });
-  });
+        console.log(err);
+      })
+  ));
 
   return Promise.all(rewardPromises);
-
 };
 
 const seedProjects = () => {
   const projects = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 100; i += 1) {
     projects.push({
-      location: faker.address.country()
+      location: faker.address.country(),
     });
   }
 
-  let projectPromises = projects.map((project) => {
-    return db.Project.create(project)
+  const projectPromises = projects.map(project => (
+    db.Project.create(project)
       .catch((err) => {
-        return Promise.resolve();
-      });
-  });
+        console.log(err);
+      })
+  ));
 
   return Promise.all(projectPromises);
 };

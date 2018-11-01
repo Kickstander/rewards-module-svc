@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+
 const db = new Sequelize('rewards', 'root', '', {
-  dialect: 'mysql'
+  dialect: 'mysql',
 });
 
 const Reward = db.define('Reward', {
@@ -15,11 +16,11 @@ const Reward = db.define('Reward', {
   limitCount: Sequelize.INTEGER,
   estDeliv: Sequelize.STRING,
   shipsTo: Sequelize.STRING,
-  backers: Sequelize.INTEGER
+  backers: Sequelize.INTEGER,
 });
 
 const Project = db.define('Project', {
-  location: Sequelize.STRING
+  location: Sequelize.STRING,
 });
 
 Reward.sync();

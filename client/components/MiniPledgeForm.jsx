@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MiniPledgeForm = (props) => (
-  <div className='miniPledgeForm'>
+const MiniPledgeForm = ({ reward }) => (
+  <div className="miniPledgeForm">
     <form>
       <LabelWrapper>Pledge amount</LabelWrapper>
       <div>
-        <CurrencyWrapper htmlFor={`${props.projectId}pledgeForm`}>$</CurrencyWrapper>
-        <InputWrapper type='text' id={`${props.projectId}pledgeForm`} defaultValue={`${props.pledgeAmount}`} min={`${props.pledgeAmount}`}></InputWrapper>
+        <CurrencyWrapper htmlFor={`${reward.id}pledgeForm`}>$</CurrencyWrapper>
+        <InputWrapper type="text" id={`${reward.id}pledgeForm`} defaultValue={`${reward.pledgeAmount}`} min={`${reward.pledgeAmount}`} />
       </div>
       <div>
         <Continue>Continue</Continue>
@@ -16,7 +16,7 @@ const MiniPledgeForm = (props) => (
   </div>
 );
 
-//styled Components for MiniPledgeForm component
+// styled Components for MiniPledgeForm component
 const LabelWrapper = styled.label`
   font-family: 'Barlow', sans-serif;
   font-size: 12px;

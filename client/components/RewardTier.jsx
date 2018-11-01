@@ -6,58 +6,98 @@ class RewardTier extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clicked: false
+      clicked: false,
+      limited: false,
     };
 
     this.handleWidgetClick = this.handleWidgetClick.bind(this);
+    this.checkLimited = this.checkLimited.bind(this);
     this.renderView = this.renderView.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkLimited();
   }
 
   handleWidgetClick() {
     this.setState({
-      clicked: true
+      clicked: true,
     });
   }
 
+  checkLimited() {
+    const { reward } = this.props;
+    if (reward.isLimited) {
+      this.setState({
+        limited: true,
+      });
+    }
+  }
+
+  renderLimited() {
+    const { limited } = this.state;
+    const { reward } = this.props;
+
+    if (limited === true) {
+      const leftover = reward.limitCount - reward.backers;
+
+      return (
+        <DivWrapper>
+          {`Limited (${leftover} left of ${reward.limitCount})`}
+        </DivWrapper>
+      );
+    }
+  }
+
   renderView() {
-    let { clicked } = this.state;
+    const { clicked } = this.state;
+    const { reward } = this.props;
+
     if (clicked === false) {
       return (
         <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
       );
-    } else if (clicked === true) {
+    }
+    if (clicked === true) {
       return (
         <DivWrapper>
-          <MiniPledgeForm projectId={this.props.reward.id} pledgeAmount={this.props.reward.pledgeAmount}/>
+          <MiniPledgeForm reward={reward} />
         </DivWrapper>
       );
     }
   }
 
   render() {
+    const { reward } = this.props;
+
     return (
       <RewardWrapper>
-        <DivWrapper id={`${this.props.reward.id}`} className='rewardTier'>
-          <TitleWrapper className='pledgeAmount'>Pledge US$ {this.props.reward.pledgeAmount} or more</TitleWrapper>
-          <RewardName className='rewardName'>{this.props.reward.name}</RewardName>
-          <RewardDesc className='rewardDesc'>{this.props.reward.description}</RewardDesc>
-          <div className='rewardItems'>
+        <DivWrapper id={`${reward.id}`} className="rewardTier">
+          <TitleWrapper className="pledgeAmount">
+            {`Pledge US$ ${reward.pledgeAmount} or more`}
+          </TitleWrapper>
+          <RewardName className="rewardName">{reward.name}</RewardName>
+          <RewardDesc className="rewardDesc">{reward.description}</RewardDesc>
+          <div className="rewardItems">
             <GenericWrapper>INCLUDES:</GenericWrapper>
             <ul>
-              <ListWrapper>{this.props.reward.item1}</ListWrapper>
-              <ListWrapper>{this.props.reward.item2}</ListWrapper>
-              <ListWrapper>{this.props.reward.item3}</ListWrapper>
+              <ListWrapper>{reward.item1}</ListWrapper>
+              <ListWrapper>{reward.item2}</ListWrapper>
+              <ListWrapper>{reward.item3}</ListWrapper>
             </ul>
           </div>
-          <div className='estDeliv'>
+          <EstDelivWrapper className="estDeliv">
             <GenericWrapper>ESTIMATED DELIVERY</GenericWrapper>
-            <ContentWrapper>{this.props.reward.estDeliv}</ContentWrapper>
-          </div>
-          <div className='shipsTo'>
+            <ContentWrapper>{reward.estDeliv}</ContentWrapper>
+          </EstDelivWrapper>
+          <ShipsWrapper className="shipsTo">
             <GenericWrapper>SHIPS TO</GenericWrapper>
-            <ContentWrapper>{this.props.reward.shipsTo}</ContentWrapper>
-          </div>
-          <GenericWrapper className='backers'>{this.props.reward.backers} backers</GenericWrapper>
+            <ContentWrapper>{reward.shipsTo}</ContentWrapper>
+          </ShipsWrapper>
+          {this.renderLimited()}
+          <GenericWrapper className="backers">
+            {`${reward.backers} backers`}
+          </GenericWrapper>
         </DivWrapper>
         {this.renderView()}
       </RewardWrapper>
@@ -117,6 +157,15 @@ const RewardDesc = styled.div`
 const ListWrapper = styled.li`
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
+`;
+
+const EstDelivWrapper = styled.div`
+  display: inline-block;
+`;
+
+const ShipsWrapper = styled.div`
+  margin-left: 15%;
+  display: inline-block;
 `;
 
 const GenericWrapper = styled.div`
