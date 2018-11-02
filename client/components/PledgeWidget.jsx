@@ -33,13 +33,14 @@ class PledgeWidget extends React.Component {
 
   render() {
     const { projectId } = this.props;
+    const { projectCurrency } = this.props;
 
     return (
       <div className="pledgeWidget" onClick={this.handleClick}>
         <DivWrapper>Make a pledge without a reward</DivWrapper>
         <form>
           <DivWrapper>
-            <CurrencyWrapper htmlFor={`${projectId}pledgeWidget`}>$</CurrencyWrapper>
+            <CurrencyWrapper htmlFor={`${projectId}pledgeWidget`}>{projectCurrency}</CurrencyWrapper>
             <InputWrapper type="text" id={`${projectId}pledgeWidget`} defaultValue="10" />
           </DivWrapper>
           {this.renderView()}
@@ -67,13 +68,13 @@ const CurrencyWrapper = styled.label`
 const InputWrapper = styled.input`
   box-sizing: border-box;
   padding: 1.5%;
-  width: 90%;
+  width: 80%;
 `;
 
 const DivWrapper = styled.div`
-  margin: 15px;
+  margin: 10px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
 `;
 
 const Continue = styled.button`

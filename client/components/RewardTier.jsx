@@ -42,39 +42,42 @@ class RewardTier extends React.Component {
       const leftover = reward.limitCount - reward.backers;
 
       return (
-        <DivWrapper>
+        <LimitedWrapper>
           {`Limited (${leftover} left of ${reward.limitCount})`}
-        </DivWrapper>
+        </LimitedWrapper>
       );
     }
+    return (
+      <DivWrapper />
+    );
   }
 
   renderView() {
     const { clicked } = this.state;
     const { reward } = this.props;
+    const { projectCurrency } = this.props;
 
-    if (clicked === false) {
-      return (
-        <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
-      );
-    }
     if (clicked === true) {
       return (
         <DivWrapper>
-          <MiniPledgeForm reward={reward} />
+          <MiniPledgeForm reward={reward} projectCurrency={projectCurrency} />
         </DivWrapper>
       );
     }
+    return (
+      <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
+    );
   }
 
   render() {
     const { reward } = this.props;
+    const { projectCurrency } = this.props;
 
     return (
       <RewardWrapper>
         <DivWrapper id={`${reward.id}`} className="rewardTier">
           <TitleWrapper className="pledgeAmount">
-            {`Pledge US$ ${reward.pledgeAmount} or more`}
+            {`Pledge ${projectCurrency} ${reward.pledgeAmount} or more`}
           </TitleWrapper>
           <RewardName className="rewardName">{reward.name}</RewardName>
           <RewardDesc className="rewardDesc">{reward.description}</RewardDesc>
@@ -86,18 +89,20 @@ class RewardTier extends React.Component {
               <ListWrapper>{reward.item3}</ListWrapper>
             </ul>
           </div>
-          <EstDelivWrapper className="estDeliv">
-            <GenericWrapper>ESTIMATED DELIVERY</GenericWrapper>
-            <ContentWrapper>{reward.estDeliv}</ContentWrapper>
-          </EstDelivWrapper>
-          <ShipsWrapper className="shipsTo">
-            <GenericWrapper>SHIPS TO</GenericWrapper>
-            <ContentWrapper>{reward.shipsTo}</ContentWrapper>
-          </ShipsWrapper>
+          <FlexWrapper>
+            <div className="estDeliv">
+              <GenericWrapper>ESTIMATED DELIVERY</GenericWrapper>
+              <ContentWrapper>{reward.estDeliv}</ContentWrapper>
+            </div>
+            <ShipsWrapper className="shipsTo">
+              <GenericWrapper>SHIPS TO</GenericWrapper>
+              <ContentWrapper>{reward.shipsTo}</ContentWrapper>
+            </ShipsWrapper>
+          </FlexWrapper>
           {this.renderLimited()}
-          <GenericWrapper className="backers">
+          <BackersWrapper className="backers">
             {`${reward.backers} backers`}
-          </GenericWrapper>
+          </BackersWrapper>
         </DivWrapper>
         {this.renderView()}
       </RewardWrapper>
@@ -108,7 +113,7 @@ class RewardTier extends React.Component {
 // styled components for RewardTier component
 const RewardWrapper = styled.div`
   position: relative;
-  width: 22%;
+  width: 20%;
   border: solid 1px;
   margin-bottom: 20px;
 `;
@@ -159,19 +164,32 @@ const ListWrapper = styled.li`
   font-size: 14px;
 `;
 
-const EstDelivWrapper = styled.div`
-  display: inline-block;
+const FlexWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
 `;
 
 const ShipsWrapper = styled.div`
+  width: 40%;
   margin-left: 15%;
-  display: inline-block;
+`;
+
+const BackersWrapper = styled.div`
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
 `;
 
 const GenericWrapper = styled.div`
   font-family: 'Raleway', sans-serif;
   font-size: 10px;
   margin-top: 10px;
+`;
+
+const LimitedWrapper = styled.div`
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  margin-top: 15px;
+  color: rgb(255, 81, 81);
 `;
 
 const ContentWrapper = styled.div`

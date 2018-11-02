@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MiniPledgeForm = ({ reward }) => (
+const MiniPledgeForm = ({ reward, projectCurrency }) => (
   <div className="miniPledgeForm">
     <form>
       <LabelWrapper>Pledge amount</LabelWrapper>
       <div>
-        <CurrencyWrapper htmlFor={`${reward.id}pledgeForm`}>$</CurrencyWrapper>
+        <CurrencyWrapper htmlFor={`${reward.id}pledgeForm`}>{projectCurrency}</CurrencyWrapper>
         <InputWrapper type="text" id={`${reward.id}pledgeForm`} defaultValue={`${reward.pledgeAmount}`} min={`${reward.pledgeAmount}`} />
       </div>
       <div>
@@ -39,7 +39,7 @@ const CurrencyWrapper = styled.label`
 const InputWrapper = styled.input`
   box-sizing: border-box;
   padding: 1.5%;
-  width: 90%;
+  width: 80%;
 `;
 
 const Continue = styled.button`

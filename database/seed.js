@@ -54,7 +54,7 @@ const seedRewards = () => {
   const rewardPromises = rewards.map(reward => (
     db.Reward.create(reward)
       .catch((err) => {
-        console.log(err);
+        throw err;
       })
   ));
 
@@ -63,16 +63,27 @@ const seedRewards = () => {
 
 const seedProjects = () => {
   const projects = [];
+  const countries = ['CA', 'UK', 'US', 'AU', 'NZ', 'NL', 'DK', 'IE', 'NO', 'SE', 'DE',
+    'FR', 'ES', 'IT', 'AT', 'BE', 'CH', 'LU', 'HK', 'SG', 'MS', 'JP'];
+
   for (let i = 0; i < 100; i += 1) {
-    projects.push({
-      location: faker.address.country(),
-    });
+    const randIdx = Math.floor(Math.random() * countries.length);
+
+    if (i % 5 === 0) {
+      projects.push({
+        location: countries[randIdx],
+      });
+    } else {
+      projects.push({
+        location: 'US',
+      });
+    }
   }
 
   const projectPromises = projects.map(project => (
     db.Project.create(project)
       .catch((err) => {
-        console.log(err);
+        throw err;
       })
   ));
 

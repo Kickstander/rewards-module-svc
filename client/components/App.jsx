@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import RewardTier from './RewardTier.jsx';
 import PledgeWidget from './PledgeWidget.jsx';
+import LimitedGone from './LimitedGone.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,14 +11,19 @@ class App extends React.Component {
     this.state = {
       projectRewards: [],
       currentProject: null,
+      projectCurrency: '',
     };
 
     this.fetchRewards = this.fetchRewards.bind(this);
+    this.fetchCurrency = this.fetchCurrency.bind(this);
+    this.renderLimited = this.renderLimited.bind(this);
   }
 
   componentDidMount() {
     // initial mount with project 1 for now
-    this.fetchRewards(1);
+    // project 10 shows limited awards
+    this.fetchRewards(10);
+    this.fetchCurrency(10);
   }
 
   fetchRewards(projectId) {
@@ -29,39 +35,83 @@ class App extends React.Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
 
+  fetchCurrency(projectId) {
+    axios.get(`/api/${projectId}/currency`)
+      .then((res) => {
+        this.setState({
+          projectCurrency: res.data,
+        });
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  renderLimited() {
+    const { projectRewards } = this.state;
+    const { currentProject } = this.state;
+    const { projectCurrency } = this.state;
+    const limitedRewards = projectRewards.filter(reward => (
+      (reward.limitCount !== null) && (reward.limitCount === reward.backers)
+    ));
+
+    if (limitedRewards.length) {
+      return (
+        <div>
+          <StyledHeader>
+            All gone!
+          </StyledHeader>
+          {limitedRewards.map(reward => (
+            <LimitedGone key={`${currentProject}${reward.id}`} reward={reward} projectCurrency={projectCurrency} />
+          ))}
+        </div>
+      );
+    }
+    return (
+      <div />
+    );
+  }
 
   render() {
+    let { projectRewards } = this.state;
     const { currentProject } = this.state;
-    const { projectRewards } = this.state;
+    const { projectCurrency } = this.state;
+
+    projectRewards = projectRewards.filter(reward => (
+      (reward.limitCount === null || reward.limitCount !== reward.backers)
+    ));
 
     return (
       <div>
         <StyledHeader>Support</StyledHeader>
         <StyledPledgeWidget className="pledgeWidget">
-          <PledgeWidget projectId={currentProject} />
+          <PledgeWidget projectId={currentProject} projectCurrency={projectCurrency} />
         </StyledPledgeWidget>
         <div>
           {projectRewards.map(reward => (
-            <RewardTier key={`${currentProject}${reward.id}`} reward={reward} />
+            <RewardTier key={`${currentProject}${reward.id}`} reward={reward} projectCurrency={projectCurrency} />
           ))}
         </div>
+        {this.renderLimited()}
       </div>
     );
   }
 }
 
+// styled components for App component
 const StyledHeader = styled.h1`
   font-family: 'Raleway', sans-serif;
   font-size: 26px;
+  margin-left: 5px;
 `;
 
 const StyledPledgeWidget = styled.div`
   margin-bottom: 20px;
-  width: 20%;
+  width: 18%;
   border: solid 1px;
   padding: 1%;
 
