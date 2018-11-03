@@ -6,56 +6,104 @@ class RewardTier extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'default'
+      clicked: false,
+      limited: false,
     };
 
     this.handleWidgetClick = this.handleWidgetClick.bind(this);
+    this.checkLimited = this.checkLimited.bind(this);
     this.renderView = this.renderView.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkLimited();
   }
 
   handleWidgetClick() {
     this.setState({
-      view: 'clicked'
+      clicked: true,
     });
   }
 
-  renderView() {
-    let {view} = this.state;
-    if (view === 'clicked') {
-      return (
-        <StyledMiniPledgeForm>
-          <MiniPledgeForm projectId={this.props.reward.id} pledgeAmount={this.props.reward.pledgeAmount}/>
-        </StyledMiniPledgeForm>
-      );
+  checkLimited() {
+    const { reward } = this.props;
+    if (reward.isLimited) {
+      this.setState({
+        limited: true,
+      });
     }
   }
 
+  renderLimited() {
+    const { limited } = this.state;
+    const { reward } = this.props;
+
+    if (limited === true) {
+      const leftover = reward.limitCount - reward.backers;
+
+      return (
+        <LimitedWrapper>
+          {`Limited (${leftover} left of ${reward.limitCount})`}
+        </LimitedWrapper>
+      );
+    }
+    return (
+      <DivWrapper />
+    );
+  }
+
+  renderView() {
+    const { clicked } = this.state;
+    const { reward } = this.props;
+    const { projectCurrency } = this.props;
+
+    if (clicked === true) {
+      return (
+        <DivWrapper>
+          <MiniPledgeForm reward={reward} projectCurrency={projectCurrency} />
+        </DivWrapper>
+      );
+    }
+    return (
+      <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
+    );
+  }
+
   render() {
+    const { reward } = this.props;
+    const { projectCurrency } = this.props;
+
     return (
       <RewardWrapper>
-        <TierWrapper id={`${this.props.reward.id}`} className='rewardTier'>
-          <TitleWrapper className='pledgeAmount'>Pledge US$ {this.props.reward.pledgeAmount} or more</TitleWrapper>
-          <RewardName className='rewardName'>{this.props.reward.name}</RewardName>
-          <RewardDesc className='rewardDesc'>{this.props.reward.description}</RewardDesc>
-          <div className='rewardItems'>
+        <DivWrapper id={`${reward.id}`} className="rewardTier">
+          <TitleWrapper className="pledgeAmount">
+            {`Pledge ${projectCurrency} ${reward.pledgeAmount} or more`}
+          </TitleWrapper>
+          <RewardName className="rewardName">{reward.name}</RewardName>
+          <RewardDesc className="rewardDesc">{reward.description}</RewardDesc>
+          <div className="rewardItems">
             <GenericWrapper>INCLUDES:</GenericWrapper>
             <ul>
-              <ListWrapper>{this.props.reward.item1}</ListWrapper>
-              <ListWrapper>{this.props.reward.item2}</ListWrapper>
-              <ListWrapper>{this.props.reward.item3}</ListWrapper>
+              <ListWrapper>{reward.item1}</ListWrapper>
+              <ListWrapper>{reward.item2}</ListWrapper>
+              <ListWrapper>{reward.item3}</ListWrapper>
             </ul>
           </div>
-          <div className='estDeliv'>
-            <GenericWrapper>ESTIMATED DELIVERY</GenericWrapper>
-            <ContentWrapper>{this.props.reward.estDeliv}</ContentWrapper>
-          </div>
-          <div className='shipsTo'>
-            <GenericWrapper>SHIPS TO</GenericWrapper>
-            <ContentWrapper>{this.props.reward.shipsTo}</ContentWrapper>
-          </div>
-          <GenericWrapper className='backers'>{this.props.reward.backers} backers</GenericWrapper>
-        </TierWrapper>
-        <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
+          <FlexWrapper>
+            <div className="estDeliv">
+              <GenericWrapper>ESTIMATED DELIVERY</GenericWrapper>
+              <ContentWrapper>{reward.estDeliv}</ContentWrapper>
+            </div>
+            <ShipsWrapper className="shipsTo">
+              <GenericWrapper>SHIPS TO</GenericWrapper>
+              <ContentWrapper>{reward.shipsTo}</ContentWrapper>
+            </ShipsWrapper>
+          </FlexWrapper>
+          {this.renderLimited()}
+          <BackersWrapper className="backers">
+            {`${reward.backers} backers`}
+          </BackersWrapper>
+        </DivWrapper>
         {this.renderView()}
       </RewardWrapper>
     );
@@ -65,7 +113,7 @@ class RewardTier extends React.Component {
 // styled components for RewardTier component
 const RewardWrapper = styled.div`
   position: relative;
-  width: 18%;
+  width: 20%;
   border: solid 1px;
   margin-bottom: 20px;
 `;
@@ -90,11 +138,7 @@ const Overlay = styled.div`
   }
 `;
 
-const StyledMiniPledgeForm = styled.div`
-  margin: 15px;
-`;
-
-const TierWrapper = styled.div`
+const DivWrapper = styled.div`
   margin: 15px;
 `;
 
@@ -120,10 +164,32 @@ const ListWrapper = styled.li`
   font-size: 14px;
 `;
 
+const FlexWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
+
+const ShipsWrapper = styled.div`
+  width: 40%;
+  margin-left: 15%;
+`;
+
+const BackersWrapper = styled.div`
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+`;
+
 const GenericWrapper = styled.div`
   font-family: 'Raleway', sans-serif;
   font-size: 10px;
   margin-top: 10px;
+`;
+
+const LimitedWrapper = styled.div`
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  margin-top: 15px;
+  color: rgb(255, 81, 81);
 `;
 
 const ContentWrapper = styled.div`

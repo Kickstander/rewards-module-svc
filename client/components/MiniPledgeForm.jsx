@@ -1,20 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MiniPledgeForm = (props) => (
-  <div className='miniPledgeForm'>
-    <LabelWrapper>Pledge amount</LabelWrapper>
-    <div>
-      <CurrencyWrapper for={`${props.projectId}pledgeForm`}>$</CurrencyWrapper>
-      <InputWrapper type='text' id={`${props.projectId}pledgeForm`} defaultValue={`${props.pledgeAmount}`} min={`${props.pledgeAmount}`}></InputWrapper>
-    </div>
-    <div>
-      <Continue>Continue</Continue>
-    </div>
+const MiniPledgeForm = ({ reward, projectCurrency }) => (
+  <div className="miniPledgeForm">
+    <form>
+      <LabelWrapper>Pledge amount</LabelWrapper>
+      <div>
+        <CurrencyWrapper htmlFor={`${reward.id}pledgeForm`}>{projectCurrency}</CurrencyWrapper>
+        <InputWrapper type="text" id={`${reward.id}pledgeForm`} defaultValue={`${reward.pledgeAmount}`} min={`${reward.pledgeAmount}`} />
+      </div>
+      <div>
+        <Continue>Continue</Continue>
+      </div>
+    </form>
   </div>
 );
 
-//styled Components for MiniPledgeForm component
+// styled Components for MiniPledgeForm component
 const LabelWrapper = styled.label`
   font-family: 'Barlow', sans-serif;
   font-size: 12px;
@@ -28,13 +30,16 @@ const CurrencyWrapper = styled.label`
   display: flex inline-block;
   align-items: center;
   justify-content: center;
-  padding-bottom: 3px;
+  padding-top: 1.1%;
+  padding-bottom: 2.2%;
   padding-right: 3%;
   padding-left: 3%;
 `;
 
 const InputWrapper = styled.input`
   box-sizing: border-box;
+  padding: 1.5%;
+  width: 80%;
 `;
 
 const Continue = styled.button`
