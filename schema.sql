@@ -1,4 +1,4 @@
-DROP DATABASE rewards;
+-- DROP DATABASE rewards;
 
 CREATE DATABASE rewards;
 
