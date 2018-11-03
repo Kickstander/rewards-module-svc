@@ -42,7 +42,7 @@ class RewardTier extends React.Component {
       const leftover = reward.limitCount - reward.backers;
 
       return (
-        <LimitedWrapper>
+        <LimitedWrapper className="limitedWrapper">
           {`Limited (${leftover} left of ${reward.limitCount})`}
         </LimitedWrapper>
       );
@@ -65,7 +65,7 @@ class RewardTier extends React.Component {
       );
     }
     return (
-      <Overlay onClick={this.handleWidgetClick}>Select this reward</Overlay>
+      <Overlay className="overlay" onClick={this.handleWidgetClick}>Select this reward</Overlay>
     );
   }
 
@@ -84,9 +84,9 @@ class RewardTier extends React.Component {
           <div className="rewardItems">
             <GenericWrapper>INCLUDES:</GenericWrapper>
             <ul>
-              <ListWrapper>{reward.item1}</ListWrapper>
-              <ListWrapper>{reward.item2}</ListWrapper>
-              <ListWrapper>{reward.item3}</ListWrapper>
+              <ListWrapper className="rewardItem1">{reward.item1}</ListWrapper>
+              <ListWrapper className="rewardItem2">{reward.item2}</ListWrapper>
+              <ListWrapper className="rewardItem3">{reward.item3}</ListWrapper>
             </ul>
           </div>
           <FlexWrapper>
@@ -198,3 +198,4 @@ const ContentWrapper = styled.div`
 `;
 
 export default RewardTier;
+module.exports.Overlay = Overlay;
