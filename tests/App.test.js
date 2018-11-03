@@ -1,7 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import App from '../client/components/App.jsx';
+import RewardTier from '../client/components/RewardTier.jsx';
 import PledgeWidget from '../client/components/PledgeWidget.jsx';
+import LimitedGone from '../client/components/LimitedGone.jsx';
 
 describe('<App />', () => {
   it('should have a PledgeWidget component', () => {

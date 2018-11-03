@@ -13,9 +13,9 @@ const LimitedGone = ({ reward, projectCurrency }) => (
         <div className="rewardItems">
           <GenericWrapper>INCLUDES:</GenericWrapper>
           <ul>
-            <ListWrapper>{reward.item1}</ListWrapper>
-            <ListWrapper>{reward.item2}</ListWrapper>
-            <ListWrapper>{reward.item3}</ListWrapper>
+            <ListWrapper className="rewardItem1">{reward.item1}</ListWrapper>
+            <ListWrapper className="rewardItem2">{reward.item2}</ListWrapper>
+            <ListWrapper className="rewardItem3">{reward.item3}</ListWrapper>
           </ul>
         </div>
         <FlexWrapper>
@@ -28,7 +28,7 @@ const LimitedGone = ({ reward, projectCurrency }) => (
             <ContentWrapper>{reward.shipsTo}</ContentWrapper>
           </ShipsWrapper>
         </FlexWrapper>
-        <NAWrapper>Reward no longer available</NAWrapper>
+        <NAWrapper className="rewardAvail">Reward no longer available</NAWrapper>
         <BackersWrapper className="backers">
           {`${reward.backers} backers`}
         </BackersWrapper>
