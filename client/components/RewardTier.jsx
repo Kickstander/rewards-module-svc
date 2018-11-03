@@ -198,4 +198,3 @@ const ContentWrapper = styled.div`
 `;
 
 export default RewardTier;
-module.exports.Overlay = Overlay;
