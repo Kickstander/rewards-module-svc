@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const db = require('../database/index.js');
 
 const app = express();
@@ -8,7 +9,7 @@ const port = 3003;
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-app.get('/api/:projectId/rewards', (req, res) => {
+app.get('http://localhost:3003/api/:projectId/rewards', cors(), (req, res) => {
   const { projectId } = req.params;
 
   db.Reward.findAll({
@@ -25,7 +26,7 @@ app.get('/api/:projectId/rewards', (req, res) => {
     });
 });
 
-app.get('/api/:projectId/currency', (req, res) => {
+app.get('http://localhost:3003/api/:projectId/currency', cors(), (req, res) => {
   const { projectId } = req.params;
 
   db.Project.findAll({
