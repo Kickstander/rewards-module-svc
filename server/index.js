@@ -9,7 +9,7 @@ const port = 3003;
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-app.get('http://localhost:3003/api/:projectId/rewards', cors(), (req, res) => {
+app.get('/api/:projectId/rewards', cors(), (req, res) => {
   const { projectId } = req.params;
 
   db.Reward.findAll({
@@ -26,7 +26,7 @@ app.get('http://localhost:3003/api/:projectId/rewards', cors(), (req, res) => {
     });
 });
 
-app.get('http://localhost:3003/api/:projectId/currency', cors(), (req, res) => {
+app.get('/api/:projectId/currency', cors(), (req, res) => {
   const { projectId } = req.params;
 
   db.Project.findAll({
