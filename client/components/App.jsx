@@ -20,14 +20,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // initial mount with project 1 for now
-    // project 10 shows limited awards
-    this.fetchRewards(10);
-    this.fetchCurrency(10);
+    this.fetchRewards();
+    this.fetchCurrency();
   }
 
-  fetchRewards(projectId) {
-    axios.get(`http://localhost:3003/api/${projectId}/rewards`)
+  fetchRewards() {
+    const projectId = window.location.pathname;
+    axios.get(`http://localhost:3003/api${projectId}/rewards`)
       .then((res) => {
         this.setState({
           projectRewards: res.data,
@@ -39,8 +38,9 @@ class App extends React.Component {
       });
   }
 
-  fetchCurrency(projectId) {
-    axios.get(`http://localhost:3003/api/${projectId}/currency`)
+  fetchCurrency() {
+    const projectId = window.location.pathname;
+    axios.get(`http://localhost:3003/api${projectId}/currency`)
       .then((res) => {
         this.setState({
           projectCurrency: res.data,
@@ -111,7 +111,7 @@ const StyledHeader = styled.h1`
 
 const StyledPledgeWidget = styled.div`
   margin-bottom: 20px;
-  width: 18%;
+  width: 98%;
   border: solid 1px;
   padding: 1%;
 

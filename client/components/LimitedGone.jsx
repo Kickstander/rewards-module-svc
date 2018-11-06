@@ -40,7 +40,7 @@ const LimitedGone = ({ reward, projectCurrency }) => (
 // styled components for LimitedGone component
 const RewardWrapper = styled.div`
   position: relative;
-  width: 20%;
+  width: 100%;
   border: solid 1px;
   margin-bottom: 20px;
 `;
