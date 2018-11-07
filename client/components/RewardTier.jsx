@@ -113,8 +113,9 @@ class RewardTier extends React.Component {
 // styled components for RewardTier component
 const RewardWrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: 65%;
   border: solid 1px;
+  border-color: rgb(192, 192, 192);
   margin-bottom: 20px;
 `;
 
@@ -162,11 +163,13 @@ const RewardDesc = styled.div`
 const ListWrapper = styled.li`
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
+  margin-left: 10%;
 `;
 
 const FlexWrapper = styled.div`
   display: flex;
   align-items: baseline;
+  margin-top: 2%;
 `;
 
 const ShipsWrapper = styled.div`

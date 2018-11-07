@@ -59,8 +59,8 @@ const CurrencyWrapper = styled.label`
   display: flex inline-block;
   align-items: center;
   justify-content: center;
-  padding-top: 1.2%;
-  padding-bottom: 2.2%;
+  padding-top: 1.8%;
+  padding-bottom: 2.1%;
   padding-right: 3%;
   padding-left: 3%;
 `;
@@ -90,6 +90,7 @@ const Continue = styled.button`
 
   :hover {
     background-color: rgb(3, 115, 98);
+    cursor: pointer;
   }
 `;
 

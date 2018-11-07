@@ -50,11 +50,12 @@ const Continue = styled.button`
   font-size: 14px;
   width: 100%;
   height: 40px;
-  margin-top: 10px;
+  margin-top: 4%;
   color: rgb(255, 255, 255);
 
   :hover {
     background-color: rgb(3, 115, 98);
+    cursor: pointer;
   }
 `;
 

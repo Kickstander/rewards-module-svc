@@ -26,6 +26,7 @@ class App extends React.Component {
 
   fetchRewards() {
     const projectId = window.location.pathname;
+    // const projectId = '/10';
     axios.get(`http://localhost:3003/api${projectId}/rewards`)
       .then((res) => {
         this.setState({
@@ -40,6 +41,7 @@ class App extends React.Component {
 
   fetchCurrency() {
     const projectId = window.location.pathname;
+    // const projectId = '/10';
     axios.get(`http://localhost:3003/api${projectId}/currency`)
       .then((res) => {
         this.setState({
@@ -105,14 +107,16 @@ class App extends React.Component {
 // styled components for App component
 const StyledHeader = styled.h1`
   font-family: 'Raleway', sans-serif;
-  font-size: 26px;
+  font-size: 24px;
   margin-left: 5px;
+  margin-bottom: 10%;
 `;
 
 const StyledPledgeWidget = styled.div`
   margin-bottom: 20px;
-  width: 98%;
+  width: 63%;
   border: solid 1px;
+  border-color: rgb(192, 192, 192);
   padding: 1%;
 
   :hover {
