@@ -24,6 +24,8 @@ npm start
 ```
 
 > To seed the database:
+
+Enter appropriate user & password information into database/index.js file
 ```sh
 npm run schema
 npm run seed
