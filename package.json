@@ -14,9 +14,9 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
     "test": "jest --coverage",
-    "build": "webpack -d --watch",
+    "build": "webpack -d",
     "seed": "node database/seed.js",
     "schema": "mysql -u root < schema.sql"
   },
