@@ -1,10 +1,9 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize({
-  user: 'ENTER_YOUR_USERNAME_HERE',
-  password: 'ENTER_YOUR_PASSWORD_HERE',
-  database: 'rewards',
+const db = new Sequelize('rewards', 'root', '', {
   dialect: 'mysql',
+  host: 'database',
+  operatorsAliases: false,
 });
 
 const Reward = db.define('Reward', {
