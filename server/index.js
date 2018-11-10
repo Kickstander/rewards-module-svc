@@ -7,7 +7,7 @@ const app = express();
 const port = 3003;
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use('/:projectId', express.static('public'));
 
 app.get('/api/:projectId/rewards', cors(), (req, res) => {
   const { projectId } = req.params;

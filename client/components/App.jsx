@@ -25,9 +25,10 @@ class App extends React.Component {
   }
 
   fetchRewards() {
-    // const projectId = window.location.pathname;
-    const projectId = '/10';
-    axios.get(`/api${projectId}/rewards`)
+    let projectId = window.location.pathname;
+    projectId = projectId.slice(1, 3);
+    // const projectId = '/10';
+    axios.get(`/api/${projectId}/rewards`)
       .then((res) => {
         this.setState({
           projectRewards: res.data,
@@ -40,9 +41,10 @@ class App extends React.Component {
   }
 
   fetchCurrency() {
-    // const projectId = window.location.pathname;
-    const projectId = '/10';
-    axios.get(`/api${projectId}/currency`)
+    let projectId = window.location.pathname;
+    projectId = projectId.slice(1, 3);
+    // const projectId = '/10';
+    axios.get(`/api/${projectId}/currency`)
       .then((res) => {
         this.setState({
           projectCurrency: res.data,
