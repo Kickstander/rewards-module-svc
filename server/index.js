@@ -5,6 +5,7 @@ const db = require('../database/index.js');
 
 const app = express();
 const port = 3003;
+const host = '0.0.0.0';
 
 app.use(bodyParser.json());
 app.use('/:projectId', express.static('public'));
@@ -70,6 +71,5 @@ app.get('/api/:projectId/currency', cors(), (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening at port ${port}`);
-});
+app.listen(port, host);
+console.log(`Server is listening at port ${port}`);

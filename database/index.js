@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const db = new Sequelize('rewards', 'root', 'test', {
   dialect: 'mysql',
-  host: 'database',
+  host: '172.17.0.2',
   operatorsAliases: false,
 });
 
