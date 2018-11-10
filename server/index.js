@@ -23,6 +23,9 @@ app.get('/api/:projectId/rewards', cors(), (req, res) => {
     .then((rewards) => {
       const results = rewards.map(reward => (reward.dataValues));
       res.send(results);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
@@ -61,6 +64,9 @@ app.get('/api/:projectId/currency', cors(), (req, res) => {
       };
       const result = currencyMap[project[0].dataValues.location];
       res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
