@@ -26,7 +26,7 @@ class App extends React.Component {
 
   fetchRewards() {
     let projectId = window.location.pathname;
-    projectId = projectId.slice(1, 3);
+    projectId = Number(projectId.slice(1, -1)) || 1;
     // const projectId = '/10';
     axios.get(`/api/${projectId}/rewards`)
       .then((res) => {
@@ -36,13 +36,13 @@ class App extends React.Component {
         });
       })
       .catch((err) => {
-        throw err;
+        console.log(err);
       });
   }
 
   fetchCurrency() {
     let projectId = window.location.pathname;
-    projectId = projectId.slice(1, 3);
+    projectId = Number(projectId.slice(1, -1)) || 1;
     // const projectId = '/10';
     axios.get(`/api/${projectId}/currency`)
       .then((res) => {
@@ -51,7 +51,7 @@ class App extends React.Component {
         });
       })
       .catch((err) => {
-        throw err;
+        console.log(err);
       });
   }
 
