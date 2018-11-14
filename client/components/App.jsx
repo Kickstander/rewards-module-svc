@@ -26,8 +26,7 @@ class App extends React.Component {
 
   fetchRewards() {
     let projectId = window.location.pathname;
-    projectId = Number(projectId.slice(1, -1)) || 1;
-    // const projectId = '/10';
+    projectId = parseInt(projectId.slice(1, -1), 10) || 1;
     axios.get(`/api/${projectId}/rewards`)
       .then((res) => {
         this.setState({
@@ -81,16 +80,16 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     let { projectRewards } = this.state;
-    const { currentProject } = this.state;
-    const { projectCurrency } = this.state;
+    const { currentProject, projectCurrency } = this.state;
 
     projectRewards = projectRewards.filter(reward => (
       (reward.limitCount === null || reward.limitCount !== reward.backers)
     ));
 
     return (
-      <div>
+      <Wrapper>
         <StyledHeader>Support</StyledHeader>
         <StyledPledgeWidget className="pledgeWidget">
           <PledgeWidget projectId={currentProject} projectCurrency={projectCurrency} />
@@ -101,12 +100,16 @@ class App extends React.Component {
           ))}
         </div>
         {this.renderLimited()}
-      </div>
+      </Wrapper>
     );
   }
 }
 
 // styled components for App component
+const Wrapper = styled.div`
+  width: 330px;
+`;
+
 const StyledHeader = styled.h1`
   font-family: 'Raleway', sans-serif;
   font-size: 24px;
@@ -116,7 +119,6 @@ const StyledHeader = styled.h1`
 
 const StyledPledgeWidget = styled.div`
   margin-bottom: 20px;
-  width: 63%;
   border: solid 1px;
   border-color: rgb(192, 192, 192);
   padding: 1%;
