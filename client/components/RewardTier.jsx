@@ -113,7 +113,6 @@ class RewardTier extends React.Component {
 // styled components for RewardTier component
 const RewardWrapper = styled.div`
   position: relative;
-  width: 65%;
   border: solid 1px;
   border-color: rgb(192, 192, 192);
   margin-bottom: 20px;

@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const db = require('../database/index.js');
@@ -9,7 +8,7 @@ const port = 3003;
 const host = '0.0.0.0';
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use('/:projectId', express.static('public'));
 
 app.get('/api/:projectId/rewards', (req, res) => {

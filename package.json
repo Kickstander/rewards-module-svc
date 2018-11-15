@@ -16,9 +16,9 @@
   "scripts": {
     "start": "node server/index.js",
     "test": "jest --coverage",
-    "build": "webpack -d",
+    "build": "webpack -d -w",
     "seed": "node database/seed.js",
-    "schema": "mysql -u root < schema.sql"
+    "schema": "mysql -u root -p < schema.sql"
   },
   "dependencies": {
     "axios": "^0.18.0",
