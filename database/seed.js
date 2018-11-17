@@ -1,11 +1,16 @@
 const faker = require('faker');
-const Promise = require('bluebird');
-const db = require('./index.js');
+const fs = require('fs');
 
 const seedRewards = () => {
-  const rewards = [];
   let tiers;
-  for (let i = 1; i < 101; i += 1) {
+  let instance;
+
+  const options = { flags: 'a' };
+  const csvStream = fs.createWriteStream('reward.csv', options);
+  // const jsonStream = fs.createWriteStream('reward.json', options);
+  // csvStream.write(reward);
+
+  for (let i = 1; i < 500001; i += 1) {
     // arbitrary trap to semi-randomize reward tier levels for different projects
     if (i % 8 === 0) {
       tiers = [1, 5, 10, 25, 50];
@@ -34,7 +39,7 @@ const seedRewards = () => {
         backers = faker.random.number(10);
       }
 
-      rewards.push({
+      instance = {
         projectId: i,
         pledgeAmount: tiers[j],
         name: faker.lorem.words(),
@@ -47,48 +52,46 @@ const seedRewards = () => {
         estDeliv,
         shipsTo: faker.lorem.words(),
         backers,
-      });
+      };
+
+      row = `${Object.values(instance).join(',')}\n`;
+      //reward = `${JSON.stringify(instance)},`;
+      csvStream.write(row);
+      //jsonStream.write(reward);
     }
   }
-
-  const rewardPromises = rewards.map(reward => (
-    db.Reward.create(reward)
-      .catch((err) => {
-        throw err;
-      })
-  ));
-
-  return Promise.all(rewardPromises);
+  csvStream.end();
+  //jsonStream.end();
 };
 
 const seedProjects = () => {
-  const projects = [];
+  const options = { flags: 'a' };
+  const csvStream = fs.createWriteStream('project.csv', options);
+  // const jsonStream = fs.createWriteStream('project.json', options);
   const countries = ['CA', 'UK', 'US', 'AU', 'NZ', 'NL', 'DK', 'IE', 'NO', 'SE', 'DE',
     'FR', 'ES', 'IT', 'AT', 'BE', 'CH', 'LU', 'HK', 'SG', 'MS', 'JP'];
-
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 1; i < 500001; i += 1) {
     const randIdx = Math.floor(Math.random() * countries.length);
 
     if (i % 5 === 0) {
-      projects.push({
-        location: countries[randIdx],
-      });
+      csvStream.write(`${i},${countries[randIdx]}\n`);
+      //jsonStream.write(`${JSON.stringify({ projectId: i, location: countries[randIdx] })},`);
     } else {
-      projects.push({
-        location: 'US',
-      });
+      csvStream.write(`${i},US\n`);
+      //jsonStream.write(`${JSON.stringify({ projectId: i, location: 'US' })},`);
     }
   }
-
-  const projectPromises = projects.map(project => (
-    db.Project.create(project)
-      .catch((err) => {
-        throw err;
-      })
-  ));
-
-  return Promise.all(projectPromises);
 };
 
-seedRewards();
+// seedRewards();
 seedProjects();
+
+//fs.writeFile('project.csv', projectHeader, (err) => {
+  //if (err) throw err;
+  //console.log('project.csv written');
+//});
+
+//fs.writeFile('project.json', '', (err) => {
+  //if (err) throw err;
+  //console.log('project.json written');
+//});

@@ -34,10 +34,10 @@ npm run seed
 ## Endpoints
 | Action    | Method | Endpoint                                                       | Purpose           |
 |-----------|--------|----------------------------------------------------------------|-------------------|
-| Create    | POST   | /api/:projectId/rewards                                        | Insert new update |
-| Read(All) | GET    | /api/:projectId/rewards                                        | Get all updates   |
-| Update    | PUT    | /api/:projectId/rewards/:rewardId                              | Update one update |
-| Delete    | DELETE | /api/:projectId/rewards/:rewardId                              | Delete an update  |
+| Read      | GET    | /api/:projectId/rewards                                        | Get all rewards   |
+| Create    | POST   | /api/:projectId/rewards                                        | Insert new reward |
+| Update    | PUT    | /api/:projectId/rewards/:rewardId                              | Update one reward |
+| Delete    | DELETE | /api/:projectId/rewards/:rewardId                              | Delete an reward  |
 
 ## Requirements
 

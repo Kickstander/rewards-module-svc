@@ -13,7 +13,6 @@ class App extends React.Component {
       currentProject: null,
       projectCurrency: '',
     };
-
     this.fetchRewards = this.fetchRewards.bind(this);
     this.fetchCurrency = this.fetchCurrency.bind(this);
     this.renderLimited = this.renderLimited.bind(this);
@@ -29,6 +28,7 @@ class App extends React.Component {
     projectId = parseInt(projectId.slice(1, -1), 10) || 1;
     axios.get(`/api/${projectId}/rewards`)
       .then((res) => {
+        console.log(res.data);
         this.setState({
           projectRewards: res.data,
           currentProject: projectId,
@@ -45,6 +45,7 @@ class App extends React.Component {
     // const projectId = '/10';
     axios.get(`/api/${projectId}/currency`)
       .then((res) => {
+        console.log(res);
         this.setState({
           projectCurrency: res.data,
         });
