@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const db = require('../database/index.js');
 
 const app = express();
@@ -13,62 +12,55 @@ app.use('/:projectId', express.static('public'));
 
 app.get('/api/:projectId/rewards', (req, res) => {
   const { projectId } = req.params;
-
-  db.Reward.findAll({
-    where: {
-      projectId,
-    },
-    order: [
-      ['pledgeAmount', 'ASC'],
-    ],
-  })
+  db.reward.find({ projectId }).sort({ pledgeAmount: 1 })
     .then((rewards) => {
-      const results = rewards.map(reward => (reward.dataValues));
-      res.send(results);
+      res.send(rewards);
     })
     .catch((err) => {
-      console.log(err);
+      res.send(err);
+    });
+});
+
+app.post('/api/:projectId/rewards', (req, res) => {
+  db.reward.create(req.body)
+    .then(() => {
+      res.send('created a new reward');
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.put('/api/:projectId/rewards/:rewardId', (req, res) => {
+  const { rewardId } = req.params;
+  db.reward.findByIdAndUpdate(rewardId, req.body)
+    .then(() => {
+      res.send('updated');
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.delete('/api/:projectId/rewards/:rewardId', (req, res) => {
+  const { rewardId } = req.params;
+  db.reward.findByIdAndRemove(rewardId)
+    .then(() => {
+      res.send('deleted');
+    })
+    .catch((err) => {
+      res.send(err);
     });
 });
 
 app.get('/api/:projectId/currency', (req, res) => {
   const { projectId } = req.params;
-
-  db.Project.findAll({
-    where: {
-      id: projectId,
-    },
-  })
+  db.project.findOne({ projectId })
     .then((project) => {
-      const currencyMap = {
-        CA: 'C$',
-        UK: '£',
-        US: 'US$',
-        AU: 'A$',
-        NZ: 'NZ$',
-        NL: '€',
-        DK: 'kr.',
-        IE: '€',
-        NO: 'kr',
-        SE: 'kr',
-        DE: '€',
-        FR: '€',
-        ES: '€',
-        IT: '€',
-        AT: '€',
-        BE: '€',
-        CH: 'Fr.',
-        LU: '€',
-        HK: 'HK$',
-        SG: 'S$',
-        MX: 'Mex$',
-        JP: '¥',
-      };
-      const result = currencyMap[project[0].dataValues.location];
-      res.send(result);
+      res.send(project);
     })
     .catch((err) => {
-      console.log(err);
+      res.send(err);
     });
 });
 
