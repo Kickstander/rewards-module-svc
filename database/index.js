@@ -1,32 +1,12 @@
-const Sequelize = require('sequelize');
-
-const db = new Sequelize('rewards', 'root', 'ye', {
-  dialect: 'mysql',
+const { Client } = require('pg');
+const client = new Client({
+  user: 'postgres',
   host: 'localhost',
-  operatorsAliases: false,
+  password: 'ye',
+  database: 'rewards',
+  port: 5432,
 });
 
-const Reward = db.define('Reward', {
-  projectId: Sequelize.INTEGER,
-  pledgeAmount: Sequelize.INTEGER,
-  name: Sequelize.STRING,
-  description: Sequelize.STRING(500),
-  item1: Sequelize.STRING,
-  item2: Sequelize.STRING,
-  item3: Sequelize.STRING,
-  isLimited: Sequelize.BOOLEAN,
-  limitCount: Sequelize.INTEGER,
-  estDeliv: Sequelize.STRING,
-  shipsTo: Sequelize.STRING,
-  backers: Sequelize.INTEGER,
-});
+client.connect();
 
-const Project = db.define('Project', {
-  location: Sequelize.STRING,
-});
-
-Reward.sync();
-Project.sync();
-
-exports.Reward = Reward;
-exports.Project = Project;
+module.exports = client;

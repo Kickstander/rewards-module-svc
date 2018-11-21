@@ -31,6 +31,14 @@ npm run schema
 npm run seed
 ```
 
+## Endpoints
+| Action    | Method | Endpoint                                                       | Purpose           |
+|-----------|--------|----------------------------------------------------------------|-------------------|
+| Read      | GET    | /api/:projectId/rewards                                        | Get all rewards   |
+| Create    | POST   | /api/:projectId/rewards                                        | Insert new reward |
+| Update    | PUT    | /api/:projectId/rewards/:rewardId                              | Update one reward |
+| Delete    | DELETE | /api/:projectId/rewards/:rewardId                              | Delete an reward  |
+
 ## Requirements
 
 An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
