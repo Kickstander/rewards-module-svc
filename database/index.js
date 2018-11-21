@@ -1,32 +1,30 @@
-const Sequelize = require('sequelize');
+const mongoose = require('mongoose');
 
-const db = new Sequelize('rewards', 'root', 'ye', {
-  dialect: 'mysql',
-  host: 'localhost',
-  operatorsAliases: false,
+mongoose.connect('mongodb://localhost/rewards');
+
+const { Schema } = mongoose;
+
+const projectSchema = new Schema({
+  projectId: Number,
+  location: String,
 });
 
-const Reward = db.define('Reward', {
-  projectId: Sequelize.INTEGER,
-  pledgeAmount: Sequelize.INTEGER,
-  name: Sequelize.STRING,
-  description: Sequelize.STRING(500),
-  item1: Sequelize.STRING,
-  item2: Sequelize.STRING,
-  item3: Sequelize.STRING,
-  isLimited: Sequelize.BOOLEAN,
-  limitCount: Sequelize.INTEGER,
-  estDeliv: Sequelize.STRING,
-  shipsTo: Sequelize.STRING,
-  backers: Sequelize.INTEGER,
+const rewardSchema = new Schema({
+  projectId: Number,
+  pledgeAmount: Number,
+  name: String,
+  description: String,
+  item1: String,
+  item2: String,
+  item3: String,
+  isLimised: Boolean,
+  limitCount: Number,
+  estDeliv: String,
+  shipsTo: String,
+  backers: Number,
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
-const Project = db.define('Project', {
-  location: Sequelize.STRING,
-});
-
-Reward.sync();
-Project.sync();
-
-exports.Reward = Reward;
-exports.Project = Project;
+exports.project = mongoose.model('project', projectSchema, 'project');
+exports.reward = mongoose.model('reward', rewardSchema, 'reward');
