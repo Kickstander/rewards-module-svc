@@ -6,7 +6,6 @@ const app = express();
 const port = 3004;
 const host = '0.0.0.0';
 
-app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use('/:projectId', express.static('public'));
