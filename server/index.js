@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const cors = require('cors');
 const db = require('../database/index.js');
@@ -55,9 +56,9 @@ app.delete('/api/:projectId/rewards/:rewardId', (req, res) => {
 
 app.get('/api/:projectId/currency', (req, res) => {
   const { projectId } = req.params;
-  db.project.findOne({ projectId })
+  db.project.find({ projectId })
     .then((project) => {
-      res.send(project);
+      res.send(project[0]);
     })
     .catch((err) => {
       res.send(err);
