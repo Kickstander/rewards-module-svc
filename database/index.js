@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/rewards');
+mongoose.connect('mongodb://ec2-54-193-113-43.us-west-1.compute.amazonaws.com/rewards');
+
+var db = mongoose.connection;
+
+db.on('error', () => {
+  console.log('connection error');
+});
+
+db.once('open', () => {
+  console.log('mongodb connected');
+});
 
 const { Schema } = mongoose;
 
@@ -22,8 +32,6 @@ const rewardSchema = new Schema({
   estDeliv: String,
   shipsTo: String,
   backers: Number,
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
 });
 
 exports.project = mongoose.model('project', projectSchema, 'project');

@@ -1,11 +1,9 @@
-require('newrelic');
 const express = require('express');
 const cors = require('cors');
 const db = require('../database/index.js');
 
 const app = express();
-const port = 3003;
-const host = '0.0.0.0';
+const port = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -65,5 +63,5 @@ app.get('/api/:projectId/currency', (req, res) => {
     });
 });
 
-app.listen(port, host);
+app.listen(process.env.PORT || port);
 console.log(`Server is listening at port ${port}`);
