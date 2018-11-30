@@ -25,7 +25,8 @@
     "bluebird": "^3.5.2",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "mongoose": "^5.3.12"
+    "mongoose": "^5.3.12",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
